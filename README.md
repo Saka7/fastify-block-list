@@ -10,14 +10,14 @@ npm i fastify-blocklist
 
 ## Usage
 
-Simply require this plugin, and set the array of blocklisted ip addresses
+Simply require this plugin, and set the array of ip addresses to block
 
 ```javascript
 const fastify = require('fastify')()
 const fastifyBlocklist = require('fastify-blocklist')
 
 fastify.register(fastifyBlocklist, {
-  blocklist: ['xxx.xxx.xxx.xxx'],
+  blocklist: ['127.0.0.1'],
 })
 
 fastify.get('/', (req, res) => {
@@ -60,12 +60,7 @@ Regular expressions are also supported
 
 ```javascript
 fastify.register(fastifyBlocklist, {
-  blocklist: [/^192\.168\.\d{1-3}\.\d{1-3}$/'],
-  error: {
-    handler: async (req, reply) => {
-      reply.code(403).send({error: 'Custom error'})
-    }
-  }
+  blocklist: [/^192\.168\.\d{1-3}\.\d{1-3}$/],
 })
 ```
 
