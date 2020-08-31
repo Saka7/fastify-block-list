@@ -1,11 +1,11 @@
-# fastify-blocklist
+# fastify-block-list
 
 IP-s blocklisting plugin for fastify
 
 ## Install
 
 ```bash
-npm i fastify-blocklist
+npm i fastify-block-list
 ```
 
 ## Usage
@@ -14,7 +14,7 @@ Simply require this plugin, and set the array of ip addresses to block
 
 ```javascript
 const fastify = require('fastify')()
-const fastifyBlocklist = require('fastify-blocklist')
+const fastifyBlocklist = require('fastify-block-list')
 
 fastify.register(fastifyBlocklist, {
   blocklist: ['127.0.0.1'],
