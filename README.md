@@ -35,7 +35,7 @@ You can also specify custom error response
 
 ```javascript
 fastify.register(fastifyBlocklist, {
-  blocklist: ['xxx.xxx.xxx.xxx'],
+  blocklist: ['127.0.0.1'],
   error: {
     code: 400,
     body: 'Custom message',
@@ -47,7 +47,20 @@ Or provide custom error handler function
 
 ```javascript
 fastify.register(fastifyBlocklist, {
-  blocklist: ['xxx.xxx.xxx.xxx'],
+  blocklist: ['127.0.0.1'],
+  error: {
+    handler: async (req, reply) => {
+      reply.code(403).send({error: 'Custom error'})
+    }
+  }
+})
+```
+
+Regular expressions are also supported
+
+```javascript
+fastify.register(fastifyBlocklist, {
+  blocklist: [/^192\.168\.\d{1-3}\.\d{1-3}$/'],
   error: {
     handler: async (req, reply) => {
       reply.code(403).send({error: 'Custom error'})

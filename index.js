@@ -18,10 +18,16 @@ const handleError = (error, req, reply, next) => {
   }
 }
 
+const anyIpsMatches = (ips, ip) => {
+  return ips && ips.length && ips.some(i => {
+    return i instanceof RegExp ? i.test(ip) : i === ip
+  })
+}
+
 module.exports = fp(function (app, options, done) {
   app.addHook('onRequest', function (req, reply, next) {
     const { blocklist, error } = options
-    if (blocklist && blocklist.length && blocklist.includes(req.ip)) {
+    if (anyIpsMatches(blocklist, req.ip)) {
       handleError(error, req, reply, next)
     } else {
       next()

@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "typescript": "tsd",
+        "format": "standard --fix",
         "test": "standard | snazzy && tap test.js && npm run typescript"
     },
     "dependencies": {

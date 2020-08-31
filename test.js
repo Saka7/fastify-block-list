@@ -68,6 +68,30 @@ test('should handle empty array', (t) => {
   })
 })
 
+test('should handle regular expressions', (t) => {
+  const fastify = Fastify()
+
+  fastify.register(blocklist, {
+    blocklist: [
+      /^127\.0\.0\.\d{1-3}$/g
+    ]
+  })
+
+  fastify.get('/', (request, reply) => {
+    reply.send({ hello: 'world' })
+  })
+
+  fastify.inject({
+    method: 'GET',
+    url: '/'
+  }, (err, res) => {
+    t.error(err)
+    const expected = 200
+    t.strictEqual(res.statusCode, expected)
+    t.end()
+  })
+})
+
 test('do not block not listed ips', (t) => {
   const fastify = Fastify()
 
@@ -115,7 +139,7 @@ test('return custom error code', (t) => {
   })
 })
 
-test('return custom error code', (t) => {
+test('return custom error body', (t) => {
   const fastify = Fastify()
 
   fastify.register(blocklist, {
